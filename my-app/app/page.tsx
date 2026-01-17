@@ -3,13 +3,15 @@
 import Image from "next/image";
 import { useState } from "react";
 
-
 const GOOGLE_SHEETS_WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbyBk-gS9f4W8kxbfy8DnegzqjUHfhHvCp_bk5ju5xqhAMdF9KhDNFMgfuBEO6KK9EFMyw/exec";
 
 export default function HomePage() {
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<null | { type: "success" | "error"; msg: string }>(null);
+  const [status, setStatus] = useState<null | {
+    type: "success" | "error";
+    msg: string;
+  }>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -27,23 +29,25 @@ export default function HomePage() {
     ).value.trim();
 
     try {
-const res = await fetch("/api/book-call", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    name,
-    email,
-    phone,
-    type: userType,
-    specialization,
-  }),
-});
-
+      const res = await fetch("/api/book-call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          type: userType,
+          specialization,
+        }),
+      });
 
       const data = await res.json();
 
       if (data?.success) {
-        setStatus({ type: "success", msg: "✅ Submitted successfully! We'll contact you shortly." });
+        setStatus({
+          type: "success",
+          msg: "✅ Submitted successfully! We'll contact you shortly.",
+        });
         form.reset();
       } else {
         setStatus({ type: "error", msg: "❌ Submission failed. Please try again." });
@@ -65,9 +69,9 @@ const res = await fetch("/api/book-call", {
             <Image
               src="/Medibloze.png"
               alt="Medibolize logo"
-              width={95}
+              width={115}
               height={95}
-              className="rounded-xl"
+              className=""
               priority
             />
           </div>
@@ -81,7 +85,7 @@ const res = await fetch("/api/book-call", {
               Why Us
             </a>
             <a href="#ethos" className="text-sm text-white/70 hover:text-white transition">
-              Ethos
+              Ethics
             </a>
             <a href="#contact" className="text-sm text-white/70 hover:text-white transition">
               Contact
@@ -110,17 +114,18 @@ const res = await fetch("/api/book-call", {
           <div className="w-full">
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/70">
               <span className="h-2 w-2 rounded-full bg-white/80" />
-              Healthcare-focused. Ethics-first. Trust-driven.
+              Healthcare Marketing Agency
             </p>
 
             <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-6xl">
-              Reputation and visibility <br />
-              <span className="text-white/70">— built for doctors</span>
+              Where Healthcare  <br />
+              <span className="text-white/70"> meets Marketing</span>
             </h1>
 
             <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
-              Medibolize is a healthcare-focused reputation & visibility partner for doctors and clinics.
-              We ensure your expertise is represented accurately, ethically, and responsibly across public platforms.
+            Medibolize helps doctors and clinics strengthen their online and offline visibility through research-backed, education-led marketing that builds trust before the first consultation.
+With strong R&D and legal support, we deliver personalized growth strategies aligned with medical ethics.
+.
             </p>
 
             {/* Buttons */}
@@ -147,84 +152,45 @@ const res = await fetch("/api/book-call", {
       <section id="services" className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
           <div className="flex flex-col gap-3">
-            <p className="text-sm text-white/60">What we do</p>
+            <p className="text-sm text-white/60">Our Services</p>
             <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Services built around medical ethics
+              Everything You Need to Grow Your Practice
             </h2>
             <p className="max-w-2xl text-white/70 leading-relaxed">
-              We help doctors and clinics remain trusted, visible, and respected — without compromising professional integrity.
+              Comprehensive digital marketing solutions tailored specifically for healthcare
+              professionals.
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
+          {/* 4 Cards exactly like screenshot */}
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
             <ServiceCard
-              title="Reputation & Public Presence Management"
-              points={[
-                "Monitoring public info linked to your name or clinic",
-                "Structuring and improving online reviews ethically",
-                "Correcting inconsistencies or misleading representations",
-                "Ensuring accuracy across search results and listings",
-              ]}
+              icon={<ShareIcon />}
+              title="Social Media Marketing"
+              desc="Grow your clinic's presence on Instagram, Facebook & LinkedIn. We create engaging content that builds trust and attracts your ideal patients."
+              pills={["Content Strategy", "Community Management", "Brand Building"]}
             />
 
             <ServiceCard
-              title="Clinical Brand Positioning"
-              points={[
-                "Clarifying what you are known for clinically",
-                "Structuring how your expertise is presented publicly",
-                "Avoiding exaggerated or misleading claims",
-                "Maintaining consistency across patient-facing platforms",
-              ]}
+              icon={<TargetIcon />}
+              title="Paid Ads Management"
+              desc="Google & Meta ads designed to bring high-intent patients directly to your practice. Maximize ROI with data-driven campaigns."
+              pills={["Google Ads", "Meta Ads", "Retargeting Campaigns"]}
             />
 
             <ServiceCard
-              title="Ethical Digital Visibility"
-              points={[
-                "Education-focused content frameworks",
-                "Visibility systems aligned with medical guidelines",
-                "Avoiding promotional or sensational communication",
-                "Compliance-aware public communication",
-              ]}
+              icon={<SearchIcon />}
+              title="SEO & Local SEO"
+              desc="Rank #1 on Google when patients search for your specialty. Dominate local search results and get found by patients in your area."
+              pills={["Keyword Optimization", "Google Business Profile", "Citation Building"]}
             />
 
             <ServiceCard
-              title="Patient Education Systems"
-              points={[
-                "Clear explanations of conditions and treatments",
-                "Reducing fear and misinformation",
-                "Helping patients make informed decisions",
-                "Building trust through transparent communication",
-              ]}
+              icon={<GlobeIcon />}
+              title="Website Development"
+              desc="Convert visitors into booked appointments with stunning, fast-loading websites designed specifically for healthcare practices."
+              pills={["Mobile-First Design", "Booking Integration", "HIPAA Compliant"]}
             />
-
-            <ServiceCard
-              title="Review & Feedback Frameworks"
-              points={[
-                "Review structuring without pressure or incentives",
-                "Responding to feedback professionally",
-                "Using feedback to strengthen public trust",
-                "Preventing reputational damage from unmanaged reviews",
-              ]}
-            />
-
-            <ServiceCard
-              title="Crisis & Misinformation Protection"
-              points={[
-                "Handling negative reviews or online criticism",
-                "Managing misinformation or false narratives",
-                "Preparing response protocols for sensitive situations",
-                "Long-term reputation safeguarding strategies",
-              ]}
-            />
-          </div>
-
-          <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6">
-            <p className="text-sm text-white/60">Partnership Model</p>
-            <p className="mt-2 text-lg font-semibold">Ongoing Reputation Oversight (Long-term)</p>
-            <p className="mt-2 text-white/70 leading-relaxed">
-              Medibolize works as a long-term strategic partner — supporting continuous monitoring, periodic audits,
-              and advisory support during sensitive situations.
-            </p>
           </div>
         </div>
       </section>
@@ -233,37 +199,42 @@ const res = await fetch("/api/book-call", {
       <section id="why" className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-            What sets Medibolize apart
+            Why Medibolize ?
           </h2>
           <p className="mt-3 max-w-3xl text-white/70 leading-relaxed">
-            Most agencies apply general business tactics to healthcare, often overlooking medical ethics,
-            professional sensitivity, and long-term credibility. Medibolize was created specifically to address this gap.
+           We help healthcare practices attract and educate patients with compliant, data-driven marketing that delivers long-term trust.
+
           </p>
 
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             <FeatureCard
-              title="Healthcare-only focus"
-              desc="We work only with doctors and clinics, enabling deeper understanding of clinical sensitivity and ethical boundaries."
+              title="Healthcare-focused expertise"
+              desc="We understand medical audiences and build compliant strategies that earn trust and drive real patient growth.
+"
             />
             <FeatureCard
-              title="Ethics before visibility"
-              desc="Every action is evaluated through the lens of medical integrity. Clarity and correctness over attention."
+              title="Proven, ROI-driven strategies"
+              desc="We use data-backed campaigns and continuous optimization to deliver measurable growth and maximum return on every marketing spend."
             />
             <FeatureCard
-              title="Reputation protection, not promotion"
-              desc="Our work safeguards credibility and ensures public representation reflects real clinical expertise."
+              title="Patient-first communication"
+              desc="We craft clear, empathetic messaging that educates patients, builds trust, and turns interest into genuine appointments.
+"
             />
             <FeatureCard
-              title="Doctor-friendly communication"
-              desc="Structured, measured, and aligned with how doctors think and work — without aggressive marketing tactics."
+              title="All-in-one marketing solutions"
+              desc="From SEO and ads to high-converting websites and reporting, we handle everything under one roof for seamless growth.
+"
             />
             <FeatureCard
-              title="Long-term trust mindset"
-              desc="We build systems meant to strengthen reputation over years, not generate risky short-term spikes."
+              title="Transparent reporting"
+              desc="You get clear, easy-to-understand reports with real metrics so you always know what’s working and where your money is going.
+"
             />
             <FeatureCard
-              title="Education-led approach"
-              desc="We clarify expertise responsibly and help patients understand—without influencing medical decisions."
+              title="Scalable growth systems"
+              desc="We build repeatable, scalable marketing systems that grow steadily with your practice as demand increases.
+"
             />
           </div>
         </div>
@@ -273,27 +244,24 @@ const res = await fetch("/api/book-call", {
       <section id="ethos" className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
           <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-transparent p-8 md:p-10">
-            <p className="text-sm text-white/60">Our ethos</p>
+            <p className="text-sm text-white/60">Our Ethics</p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
               Trust is the foundation of healthcare
             </h2>
-            <p className="mt-4 max-w-3xl text-white/70 leading-relaxed">
-              Our ethos is guided by a simple principle: visibility should never come at the cost of medical integrity.
-            </p>
+<p className="mt-4 max-w-3xl text-white/70 leading-relaxed">
+  In every digital and real-world interaction, we protect trust and medical integrity—because
+  visibility should never compromise ethics.
+</p>
 
-            <div className="mt-8 grid gap-4 md:grid-cols-2">
-              <EthosItem text="Clinical expertise and professional boundaries" />
-              <EthosItem text="Accuracy over attention" />
-              <EthosItem text="Education over persuasion" />
-              <EthosItem text="Long-term trust over short-term outcomes" />
-            </div>
-
-            <div className="mt-8 rounded-2xl border border-white/10 bg-black p-6">
-              <p className="text-sm font-semibold">Medibolize is not about being louder.</p>
-              <p className="mt-2 text-white/70 leading-relaxed">
-                It is about being understood, trusted, and respected.
-              </p>
-            </div>
+<ul className="mt-6 max-w-3xl space-y-2 text-sm text-white/70">
+  <li>• Clinical expertise and professional boundaries</li>
+  <li>• Accuracy over attention</li>
+  <li>• Education over persuasion</li>
+  <li>• Long-term trust over short-term outcomes</li>
+  <li>• We do not amplify claims, we clarify expertise</li>
+  <li>• We do not influence patient decisions</li>
+  <li>• We enable informed understanding</li>
+</ul>
           </div>
         </div>
       </section>
@@ -303,9 +271,7 @@ const res = await fetch("/api/book-call", {
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
           <div className="grid gap-10 md:grid-cols-2">
             <div>
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Book a Call
-              </h2>
+              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Book a Call</h2>
               <p className="mt-3 text-white/70 leading-relaxed">
                 Fill out the details below and our team will reach out to you.
               </p>
@@ -361,9 +327,7 @@ const res = await fetch("/api/book-call", {
 
                 {/* Type */}
                 <div>
-                  <label className="text-xs text-white/60">
-                    Individual Doctor / Clinic Owner
-                  </label>
+                  <label className="text-xs text-white/60">Individual Doctor / Clinic Owner</label>
                   <select
                     name="userType"
                     required
@@ -419,95 +383,92 @@ const res = await fetch("/api/book-call", {
         </div>
       </section>
 
-      {/* FOOTER (like screenshot but same dark theme) */}
-  {/* FOOTER */}
-<footer className="border-t border-white/10 bg-black">
-  <div className="mx-auto max-w-6xl px-5 py-10">
-    <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-      {/* LEFT: Logo */}
-      <div className="flex items-center gap-3">
-        <Image
-          src="/Medibloze.png"
-          alt="Medibolize logo"
-          width={70}
-          height={70}
-          className="rounded-xl"
-        />
-      </div>
+      {/* FOOTER */}
+      <footer className="border-t border-white/10 bg-black">
+        <div className="mx-auto max-w-6xl px-5 py-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            {/* LEFT: Logo */}
+            <div className="flex items-center gap-3">
+              <Image
+                src="/Medibloze.png"
+                alt="Medibolize logo"
+                width={115}
+                height={95}
+                className="rounded-xl"
+              />
+            </div>
 
-      {/* CENTER: Links */}
-      <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-white/70">
-        <a href="#services" className="hover:text-white transition">
-          Services
-        </a>
-        <a href="#why" className="hover:text-white transition">
-          Why Us
-        </a>
-        <a href="#ethos" className="hover:text-white transition">
-          About
-        </a>
-        <a href="#contact" className="hover:text-white transition">
-          Contact
-        </a>
-      </div>
+            {/* CENTER: Links */}
+            <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-white/70">
+              <a href="#services" className="hover:text-white transition">
+                Services
+              </a>
+              <a href="#why" className="hover:text-white transition">
+                Why Us
+              </a>
+              <a href="#ethos" className="hover:text-white transition">
+                About
+              </a>
+              <a href="#contact" className="hover:text-white transition">
+                Contact
+              </a>
+            </div>
 
-      {/* RIGHT: Social Icons */}
-      <div className="flex items-center justify-center gap-4 md:justify-end">
-        {/* Instagram */}
-        <a
-          href="https://www.instagram.com/medibolize/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 hover:bg-white/15 transition"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-white/80"
-          >
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-          </svg>
-        </a>
+            {/* RIGHT: Social Icons */}
+            <div className="flex items-center justify-center gap-4 md:justify-end">
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/medibolize/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 hover:bg-white/15 transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-white/80"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              </a>
 
-        {/* LinkedIn */}
-        <a
-          href="https://www.linkedin.com/company/medibolize/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 hover:bg-white/15 transition"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="text-white/80"
-          >
-            <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5ZM.22 8.09H4.8V24H.22V8.09ZM8.09 8.09H12.5V10.3H12.56C13.18 9.14 14.69 7.91 17.09 7.91C21.8 7.91 22.67 11 22.67 14.98V24H18.09V15.41C18.09 13.36 18.05 10.73 15.25 10.73C12.4 10.73 11.97 12.92 11.97 15.27V24H7.39V8.09H8.09Z" />
-          </svg>
-        </a>
-      </div>
-    </div>
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/company/medibolize/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 hover:bg-white/15 transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="text-white/80"
+                >
+                  <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5ZM.22 8.09H4.8V24H.22V8.09ZM8.09 8.09H12.5V10.3H12.56C13.18 9.14 14.69 7.91 17.09 7.91C21.8 7.91 22.67 11 22.67 14.98V24H18.09V15.41C18.09 13.36 18.05 10.73 15.25 10.73C12.4 10.73 11.97 12.92 11.97 15.27V24H7.39V8.09H8.09Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
 
-    {/* Copyright */}
-    <div className="mt-8 border-t border-white/10 pt-5 text-center text-sm text-white/50">
-      © {new Date().getFullYear()} Medibolize. All rights reserved.
-    </div>
-  </div>
-</footer>
-
+          <div className="mt-8 border-t border-white/10 pt-5 text-center text-sm text-white/50">
+            © {new Date().getFullYear()} Medibolize. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
@@ -516,22 +477,36 @@ const res = await fetch("/api/book-call", {
 
 function ServiceCard({
   title,
-  points,
+  desc,
+  pills,
+  icon,
 }: {
   title: string;
-  points: string[];
+  desc: string;
+  pills: string[];
+  icon: React.ReactNode;
 }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition">
-      <p className="text-lg font-semibold">{title}</p>
-      <ul className="mt-4 space-y-2 text-sm text-white/70">
-        {points.map((p, idx) => (
-          <li key={idx} className="flex gap-2">
-            <span className="mt-[6px] h-2 w-2 rounded-full bg-white/70" />
-            <span>{p}</span>
-          </li>
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:bg-white/10">
+      {/* Icon box like screenshot */}
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+        <div className="text-white/80">{icon}</div>
+      </div>
+
+      <p className="mt-5 text-xl font-semibold text-white">{title}</p>
+      <p className="mt-2 text-sm leading-relaxed text-white/60">{desc}</p>
+
+      {/* Pills */}
+      <div className="mt-5 flex flex-wrap gap-2">
+        {pills.map((pill, idx) => (
+          <span
+            key={idx}
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
+          >
+            {pill}
+          </span>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
@@ -553,12 +528,89 @@ function EthosItem({ text }: { text: string }) {
   );
 }
 
-function SocialIcon({ label }: { label: string }) {
+/* ---------------- ICONS ---------------- */
+
+function ShareIcon() {
   return (
-    <button
-      type="button"
-      aria-label={label}
-      className="h-11 w-11 rounded-full border border-white/10 bg-white/10 hover:bg-white/15 transition"
-    />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M16 8a3 3 0 1 0-2.83-4H13a3 3 0 0 0 .17 1L8.9 7.2a3 3 0 0 0-1.9-.7 3 3 0 1 0 2.83 4H10a3 3 0 0 0-.17-1l4.27-2.2A3 3 0 0 0 16 8Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function TargetIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <circle
+        cx="12"
+        cy="12"
+        r="8"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <circle
+        cx="11"
+        cy="11"
+        r="7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 21l-4.3-4.3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function GlobeIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M3 12h18"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
