@@ -15,9 +15,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Medibolize",
   description: "Healthcare-focused reputation & visibility partner",
-    icons: {
-    icon: "/Medibloze.png",
-  },
 };
 
 export default function RootLayout({
